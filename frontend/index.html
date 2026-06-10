@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SQL Query Optimization using Heuristic and Cost-Based Techniques - Analyze, optimize, and compare SQL query performance">
+    <title>SQL Query Optimizer — Heuristic &amp; Cost-Based Analysis</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+    <!-- Animated Background -->
+    <div class="bg-orbs">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <span class="loading-text">Analyzing query…</span>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container">
+
+        <!-- ── Header ────────────────────────────────────── -->
+        <header class="app-header">
+            <div class="header-badge">⚡ Academic Project</div>
+            <h1>SQL Query <span class="gradient-text">Optimizer</span></h1>
+            <p>Heuristic and Cost-Based optimization techniques to analyze, transform, and benchmark SQL queries.</p>
+        </header>
+
+        <!-- ── Query Input Card ──────────────────────────── -->
+        <section class="card" id="inputCard" style="animation-delay:.1s">
+            <div class="card-title">
+                <span class="icon purple">📝</span>
+                Query Input
+            </div>
+
+            <div class="query-input-area">
+                <textarea
+                    id="queryInput"
+                    class="query-textarea"
+                    placeholder="Enter a SQL SELECT query...&#10;&#10;Example:&#10;SELECT * FROM Students s&#10;JOIN Enrollments e ON s.student_id = e.student_id&#10;WHERE s.department_id = 1 AND 1=1"
+                    spellcheck="false"
+                ></textarea>
+            </div>
+
+            <div class="opt-type-selector" style="margin-bottom: 1.5rem; display: flex; gap: 1.5rem; align-items: center; justify-content: center; background: rgba(15,20,35,0.6); padding: 1rem; border-radius: 12px; border: 1px solid rgba(100,120,200,0.2);">
+                <label style="cursor: pointer; display: flex; align-items: center; gap: 0.5rem; color: #e2e8f0; font-weight: 500; font-size: 0.95rem;">
+                    <input type="radio" name="optType" value="heuristic" checked style="accent-color: var(--primary); transform: scale(1.2);"> 
+                    <span class="icon purple">🔄</span> Heuristic Optimization
+                </label>
+                <label style="cursor: pointer; display: flex; align-items: center; gap: 0.5rem; color: #e2e8f0; font-weight: 500; font-size: 0.95rem;">
+                    <input type="radio" name="optType" value="cost" style="accent-color: var(--cyan); transform: scale(1.2);"> 
+                    <span class="icon cyan">💰</span> Cost-Based Optimization
+                </label>
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-primary" id="btnOptimize" onclick="optimizeQuery()">
+                    🚀 Optimize &amp; Analyze
+                </button>
+                <button class="btn btn-secondary" id="btnClear" onclick="clearAll()">
+                    🗑️ Clear
+                </button>
+                <button class="btn btn-secondary" id="btnTableInfo" onclick="loadTableInfo()">
+                    📊 View Tables
+                </button>
+            </div>
+
+            <!-- Sample Queries -->
+            <div class="sample-queries" id="sampleQueries">
+                <span style="font-size:.78rem;color:var(--text-muted);margin-right:4px;">Try:</span>
+            </div>
+        </section>
+
+        <!-- ── Error Display ─────────────────────────────── -->
+        <div class="error-message hidden" id="errorMessage"></div>
+
+        <!-- ── Table Info (hidden by default) ────────────── -->
+        <section class="card hidden" id="tableInfoCard" style="animation-delay:.15s">
+            <div class="card-title">
+                <span class="icon cyan">🗄️</span>
+                Database Tables
+            </div>
+            <div class="table-info-grid" id="tableInfoGrid"></div>
+        </section>
+
+        <!-- ── Results Area ──────────────────────────────── -->
+        <div id="resultsArea" class="hidden">
+
+            <!-- Query Comparison -->
+            <div class="results-grid">
+                <section class="card animate-in delay-1">
+                    <div class="card-title">
+                        <span class="icon orange">📜</span>
+                        Original Query
+                    </div>
+                    <span class="sql-label original">Before</span>
+                    <div class="sql-display" id="originalQueryDisplay"></div>
+                </section>
+
+                <section class="card animate-in delay-2">
+                    <div class="card-title">
+                        <span class="icon green">✨</span>
+                        Optimized Query
+                    </div>
+                    <span class="sql-label optimized">After</span>
+                    <div class="sql-display" id="optimizedQueryDisplay"></div>
+                </section>
+            </div>
+
+            <!-- Optimization Steps -->
+            <section class="card animate-in delay-2" id="stepsCard">
+                <div class="card-title">
+                    <span class="icon purple">🔄</span>
+                    Optimization Steps
+                </div>
+                <div class="steps-timeline" id="stepsTimeline"></div>
+            </section>
+
+            <!-- Performance Metrics -->
+            <section class="card animate-in delay-3" id="metricsCard">
+                <div class="card-title">
+                    <span class="icon green">📈</span>
+                    Performance Comparison
+                </div>
+                <div class="metrics-grid" id="metricsGrid"></div>
+            </section>
+
+            <!-- Execution Plans Side by Side -->
+            <div class="results-grid">
+                <section class="card animate-in delay-3">
+                    <div class="card-title">
+                        <span class="icon blue">🔍</span>
+                        Execution Plan — Original
+                    </div>
+                    <div class="plan-display" id="originalPlanDisplay"></div>
+                </section>
+
+                <section class="card animate-in delay-3">
+                    <div class="card-title">
+                        <span class="icon blue">🔍</span>
+                        Execution Plan — Optimized
+                    </div>
+                    <div class="plan-display" id="optimizedPlanDisplay"></div>
+                </section>
+            </div>
+
+            <!-- Detailed Comparison Table -->
+            <section class="card animate-in delay-4" id="comparisonCard">
+                <div class="card-title">
+                    <span class="icon cyan">📊</span>
+                    Detailed Comparison
+                </div>
+                <table class="comparison-table" id="comparisonTable">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Original</th>
+                            <th>Optimized</th>
+                            <th>Improvement</th>
+                        </tr>
+                    </thead>
+                    <tbody id="comparisonTableBody"></tbody>
+                </table>
+            </section>
+
+            <!-- Chart -->
+            <section class="card animate-in delay-4" id="chartCard">
+                <div class="card-title">
+                    <span class="icon purple">📉</span>
+                    Performance Chart
+                </div>
+                <div class="chart-container">
+                    <canvas id="perfChart"></canvas>
+                </div>
+            </section>
+        </div>
+
+        <!-- ── Footer ────────────────────────────────────── -->
+        <footer class="app-footer">
+            SQL Query Optimization using Heuristic &amp; Cost-Based Techniques &bull; Academic Project
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

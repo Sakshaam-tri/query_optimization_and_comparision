@@ -1,0 +1,107 @@
+-- ============================================================
+-- Sample Data for SQL Query Optimization Project
+-- Provides sufficient data to demonstrate performance differences
+-- ============================================================
+
+-- Insert Departments (10 departments)
+INSERT INTO Departments (name, building, budget) VALUES
+('Computer Science', 'Tech Hall', 500000),
+('Mathematics', 'Science Block', 300000),
+('Physics', 'Science Block', 350000),
+('Chemistry', 'Lab Building', 400000),
+('English', 'Arts Building', 200000),
+('History', 'Arts Building', 180000),
+('Economics', 'Business Hall', 320000),
+('Biology', 'Life Sciences', 380000),
+('Electrical Engineering', 'Tech Hall', 450000),
+('Mechanical Engineering', 'Workshop Block', 420000);
+
+-- Insert Professors (30 professors)
+INSERT INTO Professors (name, department_id, salary, hire_date) VALUES
+('Dr. Alan Turing', 1, 95000, '2015-08-15'),
+('Dr. Grace Hopper', 1, 92000, '2016-01-10'),
+('Dr. John Nash', 2, 88000, '2014-09-01'),
+('Dr. Emmy Noether', 2, 90000, '2017-03-20'),
+('Dr. Richard Feynman', 3, 93000, '2013-07-15'),
+('Dr. Marie Curie', 4, 91000, '2015-11-01'),
+('Dr. Linus Pauling', 4, 87000, '2018-02-14'),
+('Dr. William Shakespeare', 5, 75000, '2016-08-20'),
+('Dr. Jane Austen', 5, 73000, '2019-01-05'),
+('Dr. Howard Zinn', 6, 72000, '2017-06-10'),
+('Dr. Adam Smith', 7, 85000, '2014-04-15'),
+('Dr. John Keynes', 7, 83000, '2016-09-01'),
+('Dr. Charles Darwin', 8, 89000, '2015-03-12'),
+('Dr. Gregor Mendel', 8, 86000, '2018-07-20'),
+('Dr. Nikola Tesla', 9, 94000, '2013-11-30'),
+('Dr. Thomas Edison', 9, 91000, '2016-05-15'),
+('Dr. James Watt', 10, 90000, '2015-02-28'),
+('Dr. Henry Ford', 10, 88000, '2017-10-10'),
+('Dr. Ada Lovelace', 1, 93000, '2018-04-01'),
+('Dr. Donald Knuth', 1, 96000, '2012-09-15'),
+('Dr. Euclid', 2, 85000, '2019-06-01'),
+('Dr. Niels Bohr', 3, 92000, '2014-12-01'),
+('Dr. Rosalind Franklin', 4, 88000, '2016-03-08'),
+('Dr. Mark Twain', 5, 74000, '2018-11-15'),
+('Dr. Herodotus', 6, 71000, '2015-07-22'),
+('Dr. Milton Friedman', 7, 84000, '2017-01-15'),
+('Dr. Louis Pasteur', 8, 90000, '2014-06-20'),
+('Dr. Michael Faraday', 9, 93000, '2016-08-05'),
+('Dr. Rudolf Diesel', 10, 89000, '2018-09-12'),
+('Dr. Claude Shannon', 1, 95000, '2013-05-18');
+
+-- Insert Courses (50 courses)
+INSERT INTO Courses (title, department_id, credits, professor_id) VALUES
+('Introduction to Programming', 1, 4, 1),
+('Data Structures', 1, 4, 2),
+('Algorithms', 1, 3, 1),
+('Database Systems', 1, 4, 19),
+('Operating Systems', 1, 3, 20),
+('Computer Networks', 1, 4, 30),
+('Calculus I', 2, 4, 3),
+('Calculus II', 2, 4, 4),
+('Linear Algebra', 2, 3, 3),
+('Discrete Mathematics', 2, 3, 21),
+('Classical Mechanics', 3, 4, 5),
+('Quantum Physics', 3, 4, 22),
+('Thermodynamics', 3, 3, 5),
+('Electromagnetism', 3, 3, 22),
+('Organic Chemistry', 4, 4, 6),
+('Inorganic Chemistry', 4, 4, 7),
+('Physical Chemistry', 4, 3, 23),
+('Biochemistry', 4, 4, 6),
+('English Literature', 5, 3, 8),
+('Creative Writing', 5, 3, 9),
+('Modern Poetry', 5, 2, 24),
+('World Literature', 5, 3, 8),
+('Ancient History', 6, 3, 10),
+('Modern History', 6, 3, 25),
+('World Wars', 6, 2, 10),
+('Microeconomics', 7, 3, 11),
+('Macroeconomics', 7, 3, 12),
+('International Trade', 7, 4, 26),
+('Econometrics', 7, 3, 11),
+('Cell Biology', 8, 4, 13),
+('Genetics', 8, 4, 14),
+('Ecology', 8, 3, 27),
+('Microbiology', 8, 3, 13),
+('Circuit Analysis', 9, 4, 15),
+('Digital Electronics', 9, 4, 16),
+('Signal Processing', 9, 3, 28),
+('Power Systems', 9, 3, 15),
+('Statics', 10, 3, 17),
+('Dynamics', 10, 3, 18),
+('Fluid Mechanics', 10, 4, 29),
+('Machine Design', 10, 4, 17),
+('Artificial Intelligence', 1, 4, 20),
+('Machine Learning', 1, 4, 30),
+('Software Engineering', 1, 3, 2),
+('Web Development', 1, 4, 19),
+('Probability', 2, 3, 4),
+('Statistics', 2, 3, 21),
+('Number Theory', 2, 2, 3),
+('Analytical Chemistry', 4, 3, 7),
+('Environmental Science', 8, 3, 14);
+
+-- NOTE: Students, Enrollments, Marks, and Orders are generated
+-- programmatically in app.py for larger datasets (1000+ rows)
+-- to properly demonstrate query optimization performance differences.
